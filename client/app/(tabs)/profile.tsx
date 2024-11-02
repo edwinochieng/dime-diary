@@ -1,15 +1,10 @@
-import { Text, View } from "react-native";
+import { styles } from "@/constants/style";
+import { SafeAreaView, Text } from "react-native";
 
 export default function Profile() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <SafeAreaView className={styles.screen}>
       <Text className="text-red-500 text-2xl">Profile page!</Text>
-    </View>
+    </SafeAreaView>
   );
 }
