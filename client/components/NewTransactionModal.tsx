@@ -1,13 +1,7 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Modal,
-  StyleSheet,
-} from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import { View, Text, TextInput, TouchableOpacity, Modal } from "react-native";
+import { styles } from "@/constants/style";
+import CategoryPicker from "./CategoryPicker";
 
 export default function NewTransactionModal({ visible, onClose }: any) {
   const [activeTab, setActiveTab] = useState("Income");
@@ -16,9 +10,6 @@ export default function NewTransactionModal({ visible, onClose }: any) {
   const [category, setCategory] = useState("");
   const [date, setDate] = useState(new Date().toLocaleDateString());
   const [note, setNote] = useState("");
-
-  const incomeCategories = ["Salary", "Freelance", "Investment"];
-  const expenseCategories = ["Food", "Transport", "Utilities"];
 
   const handleCreateTransaction = () => {
     console.log({
@@ -34,127 +25,67 @@ export default function NewTransactionModal({ visible, onClose }: any) {
 
   return (
     <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
-      <View style={styles.container}>
+      <View className={styles.modalContainer}>
         {/* Tab Switch */}
-        <View style={styles.tabContainer}>
+        <View className="my-3 flex-row rounded-xl p-1 bg-gray-200 dark:bg-transparent dark:border border-gray-500">
           <TouchableOpacity
-            style={[styles.tab, activeTab === "Income" && styles.activeTab]}
+            className={activeTab === "Income" ? styles.activeTab : styles.tab}
             onPress={() => setActiveTab("Income")}
           >
-            <Text style={styles.tabText}>Income</Text>
+            <Text className={styles.tabText}>Income</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.tab, activeTab === "Expense" && styles.activeTab]}
+            className={activeTab === "Expense" ? styles.activeTab : styles.tab}
             onPress={() => setActiveTab("Expense")}
           >
-            <Text style={styles.tabText}>Expense</Text>
+            <Text className={styles.tabText}>Expense</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Form Fields */}
-        <TextInput
-          style={styles.input}
-          placeholder="Title"
-          value={title}
-          onChangeText={setTitle}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Amount"
-          keyboardType="numeric"
-          value={amount}
-          onChangeText={setAmount}
-        />
+        <View className="flex-1 mt-8">
+          <View className="flex-1">
+            <TextInput
+              placeholder="Title"
+              value={title}
+              onChangeText={setTitle}
+              className={styles.inputContainer}
+            />
+            <TextInput
+              placeholder="Amount"
+              keyboardType="numeric"
+              value={amount}
+              onChangeText={setAmount}
+              className={styles.inputContainer}
+            />
 
-        {/* Category Picker */}
-        <Picker
-          selectedValue={category}
-          onValueChange={(itemValue: any) => setCategory(itemValue)}
-          style={styles.picker}
-        >
-          {(activeTab === "Income" ? incomeCategories : expenseCategories).map(
-            (cat) => (
-              <Picker.Item key={cat} label={cat} value={cat} />
-            )
-          )}
-        </Picker>
+            <CategoryPicker
+              activeTab={activeTab}
+              category={category}
+              setCategory={setCategory}
+            />
 
-        {/* Date */}
-        <TextInput
-          style={styles.input}
-          placeholder="Date"
-          value={date}
-          onChangeText={setDate}
-        />
+            <TextInput
+              placeholder="Date"
+              value={date}
+              onChangeText={setDate}
+              className={styles.inputContainer}
+            />
 
-        {/* Note */}
-        <TextInput
-          style={styles.input}
-          placeholder="Note"
-          value={note}
-          onChangeText={setNote}
-        />
-
-        {/* Create Button */}
-        <TouchableOpacity
-          style={styles.createButton}
-          onPress={handleCreateTransaction}
-        >
-          <Text style={styles.buttonText}>Create</Text>
-        </TouchableOpacity>
+            <TextInput
+              placeholder="Note"
+              value={note}
+              onChangeText={setNote}
+              className={styles.inputContainer}
+            />
+          </View>
+          <TouchableOpacity
+            className={styles.button}
+            onPress={handleCreateTransaction}
+          >
+            <Text className={styles.buttonText}>Add Transaction</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </Modal>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: "white",
-  },
-  tabContainer: {
-    flexDirection: "row",
-    marginBottom: 20,
-  },
-  tab: {
-    flex: 1,
-    padding: 15,
-    alignItems: "center",
-    borderBottomWidth: 2,
-    borderColor: "lightgray",
-  },
-  activeTab: {
-    borderColor: "#6200ee",
-  },
-  tabText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "gray",
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "lightgray",
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 15,
-  },
-  picker: {
-    borderWidth: 1,
-    borderColor: "lightgray",
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 15,
-  },
-  createButton: {
-    backgroundColor: "#6200ee",
-    padding: 15,
-    alignItems: "center",
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-});
