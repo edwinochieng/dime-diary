@@ -18,4 +18,7 @@ export const styles = {
     "mb-8 px-4 py-6 rounded-lg bg-[#F9F9F9] dark:bg-[#1A191E] text-[16px] font-normal text-[#828282] placeholder:text-[#828282]",
   inputText:
     "text-[16px] font-normal text-[#828282] placeholder:text-[#828282]",
+  label: "text-[15px] font-normal text-[#828282] dark:text-[#E0E0E0] mb-2",
+  description:
+    "font-normal text-[18px] text-[#000000] dark:text-[#F2F2F2] mb-9",
 };
