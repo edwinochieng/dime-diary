@@ -1,6 +1,7 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, Pressable } from "react-native";
 import React from "react";
 import { styles } from "@/constants/style";
+import { Link, useRouter } from "expo-router";
 
 export default function RecentTransactions() {
   const transactions = [
@@ -99,22 +100,27 @@ export default function RecentTransactions() {
   const recentTransactions = transactions.slice(0, 10);
 
   const renderItem = ({ item }: any) => (
-    <View className={`${styles.card} mb-2`}>
-      <View className="flex-row justify-between">
-        <Text className={styles.boldText}>{item.title}</Text>
-        <Text
-          className={`${
-            item.type === "Income" ? "text-[#6FCF97]" : "text-[#EB5757]"
-          } text-[18px] font-semibold`}
-        >
-          {item.type === "Income" ? `+$${item.amount}` : `-$${item.amount}`}
-        </Text>
+    <Link
+      href={{ pathname: "/transaction/[id]", params: { id: item.id } }}
+      className={`${styles.card} mb-2`}
+    >
+      <View className="flex-1 flex-col ">
+        <View className="w-full flex-row justify-between">
+          <Text className={styles.boldText}>{item.title}</Text>
+          <Text
+            className={`${
+              item.type === "Income" ? "text-[#6FCF97]" : "text-[#EB5757]"
+            } text-[18px] font-semibold`}
+          >
+            {item.type === "Income" ? `+$${item.amount}` : `-$${item.amount}`}
+          </Text>
+        </View>
+        <View className="mt-3 w-full flex-row justify-between">
+          <Text className={styles.subText}>{item.type}</Text>
+          <Text className={styles.subText}>{item.date}</Text>
+        </View>
       </View>
-      <View className="mt-3 flex-row justify-between">
-        <Text className={styles.subText}>{item.type}</Text>
-        <Text className={styles.subText}>{item.date}</Text>
-      </View>
-    </View>
+    </Link>
   );
 
   return (
