@@ -1,10 +1,56 @@
+import Message from "@/components/Message";
+import PromptInput from "@/components/PromptInput";
 import { styles } from "@/constants/style";
-import { Text, SafeAreaView } from "react-native";
-
+import { useState } from "react";
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  ScrollView,
+  View,
+} from "react-native";
+const dummyMssages = [
+  { sender: "You", content: "Hello" },
+  { sender: "Bot", content: "Hello, how can I help you?" },
+];
 export default function Chats() {
+  const [messages, setMessages] = useState(dummyMssages);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const handleSendMessage = async (userPrompt: any) => {
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { sender: "You", content: userPrompt },
+    ]);
+
+    setIsGenerating(true);
+
+    setTimeout(() => {
+      const botResponse = "This is a simulated response!";
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { sender: "Bot", content: botResponse },
+      ]);
+      setIsGenerating(false);
+    }, 2000);
+  };
   return (
     <SafeAreaView className={styles.screen}>
-      <Text className="text-red-500 text-2xl">Chats page!</Text>
+      <ScrollView className="flex-1">
+        <View className="">
+          {messages.map((message, index) => (
+            <Message message={message} key={index} />
+          ))}
+        </View>
+        {isGenerating && (
+          <View className="flex mt-2">
+            <ActivityIndicator size="small" color="#0000ff" />
+          </View>
+        )}
+      </ScrollView>
+      <PromptInput
+        onSendMessage={handleSendMessage}
+        isGenerating={isGenerating}
+      />
     </SafeAreaView>
   );
 }

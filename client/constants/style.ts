@@ -21,4 +21,5 @@ export const styles = {
   label: "text-[15px] font-normal text-[#828282] dark:text-[#E0E0E0] mb-2",
   description:
     "font-normal text-[18px] text-[#000000] dark:text-[#F2F2F2] mb-9",
+  chatText: "font-normal text-[16px] text-[#000000] dark:text-[#F2F2F2]",
 };
