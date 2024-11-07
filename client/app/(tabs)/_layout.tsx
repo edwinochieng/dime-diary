@@ -1,7 +1,6 @@
 import Octicons from "@expo/vector-icons/Octicons";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 import { useColorScheme } from "react-native";
 import { Colors } from "@/constants/Colors";
@@ -13,10 +12,12 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         tabBarStyle: {
-          height: 56,
+          height: 60,
+          paddingBottom: 10,
+          paddingTop: 10,
         },
         headerTitle: "",
-        tabBarShowLabel: false,
+        tabBarShowLabel: true,
         tabBarHideOnKeyboard: true,
       }}
     >
@@ -25,7 +26,7 @@ export default function TabLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color, focused }) => (
-            <Octicons name="home" size={24} color={color} />
+            <Octicons name="home" size={20} color={color} />
           ),
         }}
       />
@@ -34,25 +35,17 @@ export default function TabLayout() {
         options={{
           title: "Insights",
           tabBarIcon: ({ color, focused }) => (
-            <SimpleLineIcons name="chart" size={24} color={color} />
+            <SimpleLineIcons name="chart" size={20} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="chat"
         options={{
-          title: "Chats",
+          title: "Diary AI",
+          headerTitle: "DimeDiary AI",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name="chatbox-outline" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ color, focused }) => (
-            <FontAwesome name="user-o" size={24} color={color} />
+            <Ionicons name="chatbox-outline" size={20} color={color} />
           ),
         }}
       />
