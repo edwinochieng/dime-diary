@@ -8,12 +8,11 @@ import {
   ScrollView,
   View,
 } from "react-native";
-const dummyMssages = [
-  { sender: "You", content: "Hello" },
+const initialMessages = [
   { sender: "Bot", content: "Hello, how can I help you?" },
 ];
 export default function Chats() {
-  const [messages, setMessages] = useState(dummyMssages);
+  const [messages, setMessages] = useState(initialMessages);
   const [isGenerating, setIsGenerating] = useState(false);
 
   const handleSendMessage = async (userPrompt: any) => {
@@ -42,7 +41,7 @@ export default function Chats() {
           ))}
         </View>
         {isGenerating && (
-          <View className="flex mt-2">
+          <View className="flex justify-start mt-2">
             <ActivityIndicator size="small" color="#0000ff" />
           </View>
         )}
