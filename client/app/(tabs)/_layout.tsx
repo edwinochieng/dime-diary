@@ -4,6 +4,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { Tabs } from "expo-router";
 import { useColorScheme } from "react-native";
 import { Colors } from "@/constants/Colors";
+import ClearChat from "@/components/ClearChat";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -26,7 +27,7 @@ export default function TabLayout() {
         options={{
           title: "Home",
           headerShown: false,
-          tabBarIcon: ({ color, focused }) => (
+          tabBarIcon: ({ color }) => (
             <Octicons name="home" size={20} color={color} />
           ),
         }}
@@ -35,7 +36,7 @@ export default function TabLayout() {
         name="insights"
         options={{
           title: "Insights",
-          tabBarIcon: ({ color, focused }) => (
+          tabBarIcon: ({ color }) => (
             <SimpleLineIcons name="chart" size={20} color={color} />
           ),
         }}
@@ -45,7 +46,8 @@ export default function TabLayout() {
         options={{
           title: "Ask AI",
           headerTitle: "AI Assistant",
-          tabBarIcon: ({ color, focused }) => (
+          headerRight: () => <ClearChat />,
+          tabBarIcon: ({ color }) => (
             <Ionicons name="chatbox-outline" size={20} color={color} />
           ),
         }}
