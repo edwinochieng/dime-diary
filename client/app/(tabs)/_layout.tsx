@@ -22,9 +22,10 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="(home)"
         options={{
           title: "Home",
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <Octicons name="home" size={20} color={color} />
           ),
@@ -42,8 +43,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="chat"
         options={{
-          title: "Diary AI",
-          headerTitle: "DimeDiary AI",
+          title: "Ask AI",
+          headerTitle: "AI Assistant",
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name="chatbox-outline" size={20} color={color} />
           ),
