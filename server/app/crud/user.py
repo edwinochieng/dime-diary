@@ -10,14 +10,18 @@ async def create_user(user: UserCreate) -> UserInDB:
     hashed_password = hash_password(user.password)
     new_user = user.dict()
     new_user['password'] = hashed_password  
-    user_doc = await db[USER_COLLECTION].insert_one(new_user)
-    new_user['_id'] = str(user_doc.inserted_id)
+    user_doc = await db[USER_COLLECTION].insert_one(new_user) 
+    new_user['id'] = str(user_doc.inserted_id)
+    del new_user['_id'] 
     return UserInDB(**new_user)
+
 
 async def get_user_by_email(email: str) -> Optional[UserInDB]:
     db = get_database()  
     user_doc = await db[USER_COLLECTION].find_one({"email": email})
     if user_doc:
-        user_doc["_id"] = str(user_doc["_id"])
+        user_doc['id'] = str(user_doc['_id'])
+        del user_doc['_id']  
         return UserInDB(**user_doc)
     return None
+

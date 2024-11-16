@@ -17,7 +17,7 @@ async def shutdown_event():
 
 @app.get("/")
 def read_root():
-    return {"message": "Edwin,Server is running"}
+    return {"message": "Server is running"}
 
 
 

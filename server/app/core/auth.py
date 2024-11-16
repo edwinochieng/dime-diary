@@ -1,9 +1,10 @@
 import jwt
 from datetime import datetime, timedelta
 from typing import Optional
+import os
 
 
-SECRET_KEY = "your_secret_key"  
+SECRET_KEY = os.getenv("SECRET_KEY", "fallback_secret_key")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30  
 
