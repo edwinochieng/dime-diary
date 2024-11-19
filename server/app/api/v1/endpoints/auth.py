@@ -7,13 +7,13 @@ from pydantic import BaseModel
 
 
 
-router = APIRouter()
+auth_router = APIRouter()
 class LoginRequest(BaseModel):
     email: str
     password: str
 
 
-@router.post("/signup", response_model=UserInDB)
+@auth_router.post("/signup", response_model=UserInDB)
 async def signup(user: UserCreate):
     existing_user = await get_user_by_email(user.email)
     if existing_user:
@@ -21,7 +21,7 @@ async def signup(user: UserCreate):
     return await create_user(user)
 
 
-@router.post("/login")
+@auth_router.post("/login")
 async def login(form_data: LoginRequest):
     user = await get_user_by_email(form_data.email)
     if not user or not verify_password(form_data.password, user.password):
