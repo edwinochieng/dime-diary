@@ -1,3 +1,5 @@
+import { useSession } from "@/context/AuthContext";
+import { registerUser } from "@/services/auth";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
@@ -7,7 +9,18 @@ export default function SignUpScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { signin } = useSession();
+
   const router = useRouter();
+
+  const handleSignUp = async () => {
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      return;
+    }
+    await registerUser(name, email, password);
+    await signin(email, password);
+    router.replace("/");
+  };
 
   return (
     <View className="flex-1 justify-center px-6 bg-white">
@@ -38,9 +51,7 @@ export default function SignUpScreen() {
       />
 
       <TouchableOpacity
-        onPress={() => {
-          /* Add signup logic here */
-        }}
+        onPress={handleSignUp}
         className="bg-blue-500 py-3 rounded-lg mb-6"
       >
         <Text className="text-white text-center font-semibold">Sign Up</Text>

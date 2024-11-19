@@ -1,3 +1,4 @@
+import { useSession } from "@/context/AuthContext";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
@@ -6,8 +7,18 @@ export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { signin } = useSession();
+
   const router = useRouter();
 
+  const handleSignin = async () => {
+    if (!email.trim() || !password.trim()) {
+      return;
+    }
+
+    await signin(email, password);
+    router.replace("/");
+  };
   return (
     <View className="flex-1 justify-center px-6 bg-white">
       <Text className="text-2xl font-bold mb-8 text-center">Login</Text>
@@ -29,9 +40,7 @@ export default function LoginScreen() {
       />
 
       <TouchableOpacity
-        onPress={() => {
-          /* Add login logic here */
-        }}
+        onPress={handleSignin}
         className="bg-blue-500 py-3 rounded-lg mb-6"
       >
         <Text className="text-white text-center font-semibold">Login</Text>

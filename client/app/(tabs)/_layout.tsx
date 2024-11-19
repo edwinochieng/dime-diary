@@ -1,13 +1,20 @@
 import Octicons from "@expo/vector-icons/Octicons";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { useColorScheme } from "react-native";
 import { Colors } from "@/constants/Colors";
 import ClearChat from "@/components/ClearChat";
+import { useSession } from "@/context/AuthContext";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { user } = useSession();
+
+  if (!user) {
+    return <Redirect href="/login" />;
+  }
+
   return (
     <Tabs
       screenOptions={{
