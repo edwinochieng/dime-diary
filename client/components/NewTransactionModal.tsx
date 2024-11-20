@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Modal } from "react-native";
 import { styles } from "@/constants/style";
 import CategoryPicker from "./CategoryPicker";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createTransaction } from "@/services/transaction";
 
-export default function NewTransactionModal({ visible, onClose }: any) {
+interface Props {
+  visible: boolean;
+  onClose: () => void;
+}
+
+export default function NewTransactionModal({ visible, onClose }: Props) {
   const [activeTab, setActiveTab] = useState("Income");
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
@@ -11,16 +18,32 @@ export default function NewTransactionModal({ visible, onClose }: any) {
   const [date, setDate] = useState(new Date().toLocaleDateString());
   const [note, setNote] = useState("");
 
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: () =>
+      createTransaction({
+        transaction_type: activeTab,
+        title,
+        amount: parseFloat(amount),
+        category,
+        date,
+        note,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      onClose();
+    },
+    onError: (error) => {
+      console.error("Error creating transaction:", error);
+    },
+  });
+
   const handleCreateTransaction = () => {
-    console.log({
-      type: activeTab,
-      title,
-      amount,
-      category,
-      date,
-      note,
-    });
-    onClose();
+    if (!title || !amount || !category || isNaN(parseFloat(amount))) {
+      return;
+    }
+    mutate();
   };
 
   return (

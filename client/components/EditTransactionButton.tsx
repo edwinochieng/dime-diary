@@ -3,7 +3,11 @@ import React, { useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import EditTransactionModal from "./EditTransactionModal";
 
-export default function EditTransactionButton() {
+export default function EditTransactionButton({
+  transactionId,
+}: {
+  transactionId: string;
+}) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   return (
     <View>
@@ -19,6 +23,7 @@ export default function EditTransactionButton() {
         </View>
       </Pressable>
       <EditTransactionModal
+        transactionId={transactionId}
         visible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
       />

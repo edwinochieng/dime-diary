@@ -6,18 +6,34 @@ import {
   useColorScheme,
 } from "react-native";
 import React from "react";
-import { Stack } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { styles } from "@/constants/style";
 import DeleteButton from "@/components/DeleteButton";
 import EditTransactionButton from "@/components/EditTransactionButton";
+import { useQuery } from "@tanstack/react-query";
+import { getTransactionDetails } from "@/services/transaction";
+import { Transaction } from "@/types/transaction";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export default function TransactionDetails() {
   const colorScheme = useColorScheme();
+  const { id } = useLocalSearchParams();
+  const transactionId = id.toString();
+  const { data, isLoading } = useQuery<Transaction>({
+    queryKey: ["transactionDetails", transactionId],
+    queryFn: () => getTransactionDetails(transactionId),
+    enabled: !!transactionId,
+  });
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <SafeAreaView className="flex-1 p-4 relative">
       <Stack.Screen
         options={{
-          headerRight: () => <DeleteButton />,
+          headerRight: () => <DeleteButton transactionId={transactionId} />,
           headerBackVisible: true,
           title: "Transaction Details",
           headerTitleAlign: "center",
@@ -56,7 +72,7 @@ export default function TransactionDetails() {
           </Text>
         </View>
       </ScrollView>
-      <EditTransactionButton />
+      <EditTransactionButton transactionId={transactionId} />
     </SafeAreaView>
   );
 }

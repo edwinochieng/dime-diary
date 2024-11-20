@@ -2,8 +2,13 @@ import { View, Text } from "react-native";
 import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { styles } from "@/constants/style";
+import { Transaction } from "@/types/transaction";
 
-export default function Overview() {
+interface Props {
+  transactions: Transaction[];
+}
+
+export default function Overview({ transactions }: Props) {
   return (
     <View>
       {/**Total balance */}

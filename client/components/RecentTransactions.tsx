@@ -2,9 +2,14 @@ import { View, Text, FlatList, Pressable } from "react-native";
 import React from "react";
 import { styles } from "@/constants/style";
 import { Link, useRouter } from "expo-router";
+import { Transaction } from "@/types/transaction";
 
-export default function RecentTransactions() {
-  const transactions = [
+interface Props {
+  transactions: Transaction[];
+}
+
+export default function RecentTransactions({ transactions }: Props) {
+  const recents = [
     {
       id: 1,
       title: "Groceries",
@@ -97,7 +102,7 @@ export default function RecentTransactions() {
       type: "Expense",
     },
   ];
-  const recentTransactions = transactions.slice(0, 10);
+  const recentTransactions = recents.slice(0, 10);
 
   const renderItem = ({ item }: any) => (
     <Link
