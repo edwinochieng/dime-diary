@@ -3,11 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.db.database import connect_to_db, close_db_connection
 from app.api.v1.endpoints.auth import auth_router
 from app.api.v1.endpoints.transaction import transaction_router
+from app.api.v1.endpoints.chat import chat_router
 
 app = FastAPI()
 
 app.include_router(auth_router, prefix="/auth", tags=["auth"])
 app.include_router(transaction_router, prefix="/transactions", tags=["transactions"])
+app.include_router(chat_router, prefix="/chat", tags=["chat"])
 
 
 
