@@ -1,6 +1,7 @@
 import Message from "@/components/Message";
 import PromptInput from "@/components/PromptInput";
 import { styles } from "@/constants/style";
+import { generateResponse } from "@/services/chat";
 import { useState } from "react";
 import {
   ActivityIndicator,
@@ -8,23 +9,25 @@ import {
   ScrollView,
   View,
 } from "react-native";
+
 const initialMessages = [
   { sender: "Bot", content: "Hello, how can I help you?" },
 ];
+
 export default function Chats() {
   const [messages, setMessages] = useState(initialMessages);
   const [isGenerating, setIsGenerating] = useState(false);
 
-  const handleSendMessage = async (userPrompt: any) => {
+  const handleSendMessage = async (userPrompt: string) => {
     setMessages((prevMessages) => [
       ...prevMessages,
       { sender: "You", content: userPrompt },
     ]);
 
     setIsGenerating(true);
+    const botResponse = await generateResponse(userPrompt);
 
     setTimeout(() => {
-      const botResponse = "This is a simulated response!";
       setMessages((prevMessages) => [
         ...prevMessages,
         { sender: "Bot", content: botResponse },
