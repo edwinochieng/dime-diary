@@ -4,6 +4,7 @@ import { styles } from "@/constants/style";
 import CategoryPicker from "./CategoryPicker";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateTransaction } from "@/services/transaction";
+import DatePicker from "./DatePicker";
 
 interface Props {
   transactionId: string;
@@ -92,12 +93,7 @@ export default function EditTransactionModal({
               setCategory={setCategory}
             />
 
-            <TextInput
-              placeholder="Date"
-              value={date}
-              onChangeText={setDate}
-              className={styles.inputContainer}
-            />
+            <DatePicker date={date} setDate={setDate} placeholder="Date" />
 
             <TextInput
               placeholder="Note"
