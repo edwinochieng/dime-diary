@@ -1,58 +1,60 @@
 import Message from "@/components/Message";
 import PromptInput from "@/components/PromptInput";
 import { styles } from "@/constants/style";
+import { useChat } from "@/context/ChatContext";
 import { generateResponse } from "@/services/chat";
-import { useState } from "react";
+
 import {
   ActivityIndicator,
   SafeAreaView,
   ScrollView,
+  Text,
   View,
 } from "react-native";
 
-const initialMessages = [
-  { sender: "Bot", content: "Hello, how can I help you?" },
-];
-
 export default function Chats() {
-  const [messages, setMessages] = useState(initialMessages);
-  const [isGenerating, setIsGenerating] = useState(false);
+  const { messages, addToChat, generatingResponse, setGeneratingResponse } =
+    useChat();
 
   const handleSendMessage = async (userPrompt: string) => {
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { sender: "You", content: userPrompt },
-    ]);
+    const userMessage = {
+      sender: "You",
+      content: userPrompt,
+    };
+    addToChat(userMessage);
 
-    setIsGenerating(true);
+    setGeneratingResponse(true);
     const botResponse = await generateResponse(userPrompt);
 
-    setTimeout(() => {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { sender: "Bot", content: botResponse },
-      ]);
-      setIsGenerating(false);
-    }, 2000);
+    const botMessage = {
+      sender: "Bot",
+      content: botResponse,
+    };
+    addToChat(botMessage);
+    setGeneratingResponse(false);
   };
   return (
     <SafeAreaView className={styles.screen}>
-      <ScrollView className="flex-1">
-        <View className="">
-          {messages.map((message, index) => (
-            <Message message={message} key={index} />
-          ))}
-        </View>
-        {isGenerating && (
-          <View className="flex justify-start mt-2">
-            <ActivityIndicator size="small" color="#0000ff" />
+      {messages.length > 0 ? (
+        <ScrollView className="flex-1">
+          <View className="">
+            {messages.map((message, index) => (
+              <Message message={message} key={index} />
+            ))}
           </View>
-        )}
-      </ScrollView>
-      <PromptInput
-        onSendMessage={handleSendMessage}
-        isGenerating={isGenerating}
-      />
+          {generatingResponse && (
+            <View className="flex justify-start mt-2">
+              <ActivityIndicator size="small" color="#0000ff" />
+            </View>
+          )}
+        </ScrollView>
+      ) : (
+        <View className="flex-1 justify-center items-center">
+          <Text className={styles.boldText}>How can I help you today?</Text>
+        </View>
+      )}
+
+      <PromptInput onSendMessage={handleSendMessage} />
     </SafeAreaView>
   );
 }

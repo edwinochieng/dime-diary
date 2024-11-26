@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { View, TextInput, Pressable } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useChat } from "@/context/ChatContext";
 
-export default function PromptInput({ onSendMessage, isGenerating }: any) {
+export default function PromptInput({ onSendMessage }: any) {
   const [userPrompt, setUserPrompt] = useState("");
+  const { generatingResponse } = useChat();
 
   const handleSend = () => {
     if (userPrompt.trim()) {
@@ -20,11 +22,11 @@ export default function PromptInput({ onSendMessage, isGenerating }: any) {
           placeholder="Enter prompt"
           value={userPrompt}
           onChangeText={setUserPrompt}
-          editable={!isGenerating}
+          editable={!generatingResponse}
         />
         <Pressable
           onPress={handleSend}
-          disabled={isGenerating || !userPrompt.trim()}
+          disabled={generatingResponse || !userPrompt.trim()}
           className="bg-[#006AF6]  rounded-full h-12 w-12 items-center justify-center"
         >
           <FontAwesome name="send" size={20} color="#F2F2F2" />
