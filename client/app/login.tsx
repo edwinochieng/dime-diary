@@ -20,12 +20,14 @@ export default function LoginScreen() {
     router.replace("/");
   };
   return (
-    <View className="flex-1 justify-center px-6 bg-white">
-      <Text className="text-2xl font-bold mb-8 text-center">Login</Text>
+    <View className="flex-1 justify-center px-6">
+      <Text className="text-gray-700 dark:text-gray-300 text-4xl text-center font-bold mb-12">
+        Welcome back!
+      </Text>
 
       <TextInput
         placeholder="Email"
-        className="border border-gray-300 p-3 rounded-lg mb-4"
+        className="border border-gray-300 p-3 rounded-lg mb-4 dark:text-gray-300 dark:placeholder:text-gray-400"
         onChangeText={(text) => setEmail(text)}
         value={email}
         keyboardType="email-address"
@@ -33,7 +35,7 @@ export default function LoginScreen() {
       />
       <TextInput
         placeholder="Password"
-        className="border border-gray-300 p-3 rounded-lg mb-6"
+        className="border border-gray-300 p-3 rounded-lg mb-4 dark:text-gray-300 dark:placeholder:text-gray-400"
         onChangeText={(text) => setPassword(text)}
         value={password}
         secureTextEntry
@@ -41,13 +43,15 @@ export default function LoginScreen() {
 
       <TouchableOpacity
         onPress={handleSignin}
-        className="bg-blue-500 py-3 rounded-lg mb-6"
+        className="bg-blue-500 py-4 rounded-lg mt-2 mb-6"
       >
-        <Text className="text-white text-center font-semibold">Login</Text>
+        <Text className="text-white text-xl text-center font-semibold">
+          Login
+        </Text>
       </TouchableOpacity>
 
       <View className="flex-row justify-center">
-        <Text>Don't have an account?</Text>
+        <Text className="dark:text-gray-200">Don't have an account?</Text>
         <TouchableOpacity onPress={() => router.push("/signup")}>
           <Text className="text-blue-500 ml-2 font-semibold">
             Create Account
