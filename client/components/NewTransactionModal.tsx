@@ -16,7 +16,7 @@ export default function NewTransactionModal({ visible, onClose }: Props) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
-  const [date, setDate] = useState(new Date().toLocaleDateString());
+  const [date, setDate] = useState("");
   const [note, setNote] = useState("");
 
   const queryClient = useQueryClient();

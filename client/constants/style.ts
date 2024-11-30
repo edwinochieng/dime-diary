@@ -15,9 +15,8 @@ export const styles = {
   tabText: "text-center text-[14px] text-[#F2F2F2] font-semibold uppercase",
   modalContainer: "flex-1 p-4 bg-white dark:bg-black",
   inputContainer:
-    "mb-8 px-4 py-6 rounded-lg bg-[#F9F9F9] dark:bg-[#1A191E] text-[16px] font-normal text-[#828282] placeholder:text-[#828282]",
-  inputText:
-    "text-[16px] font-normal text-[#828282] placeholder:text-[#828282]",
+    "mb-8 px-4 py-6 rounded-lg bg-[#F9F9F9] dark:bg-[#1A191E] text-[16px] font-normal text-[#828282] dark:text-white placeholder:text-[#828282]",
+  inputText: "text-[16px] font-normal text-[#828282] dark:text-white",
   label: "text-[15px] font-normal text-[#828282] dark:text-[#E0E0E0] mb-2",
   description:
     "font-normal text-[18px] text-[#000000] dark:text-[#F2F2F2] mb-9",

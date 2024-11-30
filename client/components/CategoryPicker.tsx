@@ -23,9 +23,13 @@ export default function CategoryPicker({
         className={styles.inputContainer}
         onPress={() => setIsModalVisible(true)}
       >
-        <Text className={styles.inputText}>
-          {category !== "" ? category : "Tag"}
-        </Text>
+        <View>
+          {category !== "" ? (
+            <Text className={styles.inputText}>{category}</Text>
+          ) : (
+            <Text className="text-[16px] font-normal text-[#828282] ">Tag</Text>
+          )}
+        </View>
       </Pressable>
 
       <Modal

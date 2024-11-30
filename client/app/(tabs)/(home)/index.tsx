@@ -28,7 +28,7 @@ export default function Home() {
           </View>
         ) : (
           <View className="flex-1 items-center justify-center">
-            <Text className="text-white">Add your first transaction!</Text>
+            <Text className={styles.boldText}>Add your first transaction!</Text>
           </View>
         )}
       </View>

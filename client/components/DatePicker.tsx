@@ -34,9 +34,11 @@ export default function DatePicker({
         onPress={handleShowPicker}
         className={styles.inputContainer}
       >
-        <Text className="text-gray-800 dark:text-gray-200">
-          {date || placeholder}
-        </Text>
+        {date ? (
+          <Text className=" text-[#828282] dark:text-white">{date}</Text>
+        ) : (
+          <Text className="text-[#828282]">{placeholder}</Text>
+        )}
       </TouchableOpacity>
 
       {show && (

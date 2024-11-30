@@ -15,7 +15,7 @@ export default function ClearChat() {
   };
   return (
     <>
-      {messages && (
+      {messages.length > 0 && (
         <View>
           <Pressable onPress={() => setIsModalVisible(true)} className="pr-4">
             <AntDesign name="delete" size={24} color={iconColor} />
