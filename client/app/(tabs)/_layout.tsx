@@ -24,7 +24,7 @@ export default function TabLayout() {
           paddingBottom: 10,
           paddingTop: 10,
         },
-        headerTitle: "",
+
         tabBarShowLabel: true,
         tabBarHideOnKeyboard: true,
       }}

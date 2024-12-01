@@ -1,124 +1,99 @@
-import React, { useState } from "react";
-import { View, Text, Button, ScrollView } from "react-native";
-import { BarChart, PieChart } from "react-native-chart-kit";
-import { Dimensions } from "react-native";
-
-const screenWidth = Dimensions.get("window").width;
+import React from "react";
+import { View, Text } from "react-native";
+import { PieChart } from "react-native-gifted-charts";
 
 export default function Insights() {
-  const [filter, setFilter] = useState("Today");
+  const pieData = [
+    { value: 40, color: "#93FCF8", gradientCenterColor: "#3BE9DE" },
 
-  // Example data, replace with actual data
-  const incomeExpenseData = [
-    { name: "Income", amount: 5000, color: "#6FCF97" },
-    { name: "Expenses", amount: 3000, color: "#EB5757" },
+    { value: 60, color: "#FFA5BA", gradientCenterColor: "#FF7F97" },
   ];
 
-  const expenseCategoriesData = [
-    { name: "Food", amount: 1200, color: "#FFB6C1" },
-    { name: "Rent", amount: 800, color: "#FF7F50" },
-    { name: "Entertainment", amount: 400, color: "#FF6347" },
-  ];
+  const renderDot = (color: any) => {
+    return (
+      <View
+        style={{
+          height: 10,
+          width: 10,
+          borderRadius: 5,
+          backgroundColor: color,
+          marginRight: 10,
+        }}
+      />
+    );
+  };
 
-  const incomeCategoriesData = [
-    { name: "Salary", amount: 4000, color: "#87CEFA" },
-    { name: "Freelance", amount: 1000, color: "#4682B4" },
-  ];
+  const renderLegendComponent = () => {
+    return (
+      <>
+        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              width: 120,
+              marginRight: 20,
+            }}
+          >
+            {renderDot("#3BE9DE")}
+            <Text style={{ color: "white" }}>Icome: 40%</Text>
+          </View>
+          <View
+            style={{ flexDirection: "row", alignItems: "center", width: 120 }}
+          >
+            {renderDot("#FF7F97")}
+            <Text style={{ color: "white" }}>Expense: 3%</Text>
+          </View>
+        </View>
+      </>
+    );
+  };
 
   return (
-    <ScrollView className="flex-1 bg-gray-100 p-4">
-      {/* Filter */}
-      <View className="flex-row justify-center mb-4">
-        {["Today", "This Week", "This Month", "This Year"].map((period) => (
-          <Button
-            key={period}
-            title={period}
-            onPress={() => setFilter(period)}
-            color={filter === period ? "#007AFF" : "#D3D3D3"}
+    <View
+      style={{
+        paddingVertical: 100,
+
+        flex: 1,
+      }}
+    >
+      <View
+        style={{
+          margin: 20,
+          padding: 16,
+          borderRadius: 20,
+          backgroundColor: "#232B5D",
+        }}
+      >
+        <View style={{ padding: 20, alignItems: "center" }}>
+          <PieChart
+            data={pieData}
+            donut
+            showGradient
+            sectionAutoFocus
+            radius={90}
+            innerRadius={60}
+            innerCircleColor={"#232B5D"}
+            centerLabelComponent={() => {
+              return (
+                <View
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <Text
+                    style={{ fontSize: 22, color: "white", fontWeight: "bold" }}
+                  >
+                    47%
+                  </Text>
+                  <Text style={{ fontSize: 14, color: "white" }}>
+                    Excellent
+                  </Text>
+                </View>
+              );
+            }}
           />
-        ))}
+        </View>
+        {renderLegendComponent()}
       </View>
-
-      {/* Income vs Expenses Pie Chart */}
-      <View className="mb-6">
-        <Text className="text-xl font-bold text-center mb-2">
-          Income vs Expenses
-        </Text>
-        <PieChart
-          data={incomeExpenseData.map((item) => ({
-            name: item.name,
-            population: item.amount,
-            color: item.color,
-            legendFontColor: "#7F7F7F",
-            legendFontSize: 15,
-          }))}
-          width={screenWidth - 40}
-          height={220}
-          chartConfig={{
-            color: () => `#FFFFFF`,
-          }}
-          accessor="population"
-          backgroundColor="transparent"
-          paddingLeft="15"
-          absolute
-        />
-      </View>
-
-      {/* Expense Categories Bar Chart */}
-      <View className="mb-6">
-        <Text className="text-xl font-bold text-center mb-2">
-          Expense Categories
-        </Text>
-        <BarChart
-          data={{
-            labels: expenseCategoriesData.map((item) => item.name),
-            datasets: [
-              {
-                data: expenseCategoriesData.map((item) => item.amount),
-              },
-            ],
-          }}
-          width={screenWidth - 40}
-          height={220}
-          yAxisLabel=""
-          yAxisSuffix=""
-          chartConfig={{
-            backgroundGradientFrom: "#FFF",
-            backgroundGradientTo: "#FFF",
-            decimalPlaces: 0,
-            color: (opacity = 1) => `rgba(233, 30, 99, ${opacity})`,
-          }}
-          verticalLabelRotation={30}
-        />
-      </View>
-
-      {/* Income Categories Bar Chart */}
-      <View className="mb-6">
-        <Text className="text-xl font-bold text-center mb-2">
-          Income Categories
-        </Text>
-        <BarChart
-          data={{
-            labels: incomeCategoriesData.map((item) => item.name),
-            datasets: [
-              {
-                data: incomeCategoriesData.map((item) => item.amount),
-              },
-            ],
-          }}
-          width={screenWidth - 40}
-          height={220}
-          yAxisLabel=""
-          yAxisSuffix=""
-          chartConfig={{
-            backgroundGradientFrom: "#FFF",
-            backgroundGradientTo: "#FFF",
-            decimalPlaces: 0,
-            color: (opacity = 1) => `rgba(76, 175, 80, ${opacity})`,
-          }}
-          verticalLabelRotation={30}
-        />
-      </View>
-    </ScrollView>
+    </View>
   );
 }
