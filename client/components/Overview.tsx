@@ -1,21 +1,32 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { styles } from "@/constants/style";
 import { Transaction } from "@/types/transaction";
+import { calculateTotals } from "@/utils/transactionUtils";
 
 interface Props {
   transactions: Transaction[];
 }
 
 export default function Overview({ transactions }: Props) {
+  const [totals, setTotals] = useState({
+    totalAmount: 0,
+    totalIncome: 0,
+    totalExpenses: 0,
+  });
+
+  useEffect(() => {
+    const calculatedTotals = calculateTotals(transactions);
+    setTotals(calculatedTotals);
+  }, []);
   return (
     <View>
       {/**Total balance */}
       <View className={styles.card}>
         <View className="py-4">
           <Text className={styles.subheading}>Total Balance</Text>
-          <Text className={styles.amount}>$20,000</Text>
+          <Text className={styles.amount}>${totals.totalAmount}</Text>
         </View>
       </View>
 
@@ -26,7 +37,7 @@ export default function Overview({ transactions }: Props) {
           </View>
           <View>
             <Text className={styles.subheading}>Total income</Text>
-            <Text className={styles.amount}>+$20,000</Text>
+            <Text className={styles.amount}>+${totals.totalIncome}</Text>
           </View>
         </View>
         <View className={`${styles.card} ml-1.5 flex-1`}>
@@ -35,7 +46,7 @@ export default function Overview({ transactions }: Props) {
           </View>
           <View>
             <Text className={styles.subheading}>Total expense</Text>
-            <Text className={styles.amount}>-$20,000</Text>
+            <Text className={styles.amount}>-${totals.totalExpenses}</Text>
           </View>
         </View>
       </View>
