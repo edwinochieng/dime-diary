@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getTransactionDetails } from "@/services/transaction";
 import { Transaction } from "@/types/transaction";
 import LoadingScreen from "@/components/LoadingScreen";
+import { formatTransactionDate } from "@/utils/transactionUtils";
 
 export default function TransactionDetails() {
   const colorScheme = useColorScheme();
@@ -47,30 +48,32 @@ export default function TransactionDetails() {
       <ScrollView className="flex-1 mt-12">
         <View>
           <Text className={styles.label}>Title</Text>
-          <Text className={styles.description}>CashBack Offer</Text>
+          <Text className={styles.description}>{data?.title}</Text>
         </View>
         <View>
           <Text className={styles.label}>Amount</Text>
-          <Text className={styles.description}>$30</Text>
+          <Text className={styles.description}>${data?.amount}</Text>
         </View>
         <View>
           <Text className={styles.label}>Type</Text>
-          <Text className={styles.description}>Income</Text>
+          <Text className={styles.description}>{data?.transaction_type}</Text>
         </View>
         <View>
           <Text className={styles.label}>Tag</Text>
-          <Text className={styles.description}>Entertainment</Text>
+          <Text className={styles.description}>{data?.category}</Text>
         </View>
         <View>
           <Text className={styles.label}>Date</Text>
-          <Text className={styles.description}>Sunday 18th December</Text>
-        </View>
-        <View>
-          <Text className={styles.label}>Note</Text>
           <Text className={styles.description}>
-            I got this from Payne for recharge
+            {formatTransactionDate(data!.date)}
           </Text>
         </View>
+        {data?.note && (
+          <View>
+            <Text className={styles.label}>Note</Text>
+            <Text className={styles.description}>{data?.note}</Text>
+          </View>
+        )}
       </ScrollView>
       <EditTransactionButton transactionId={transactionId} />
     </SafeAreaView>
