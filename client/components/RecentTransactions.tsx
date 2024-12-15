@@ -31,8 +31,8 @@ export default function RecentTransactions({ transactions }: Props) {
             } text-[18px] font-semibold`}
           >
             {item.transaction_type === "Income"
-              ? `+$${item.amount}`
-              : `-$${item.amount}`}
+              ? `+$${item.amount.toFixed(2)}`
+              : `-$${item.amount.toFixed(2)}`}
           </Text>
         </View>
         <View className="mt-3 w-full flex-row justify-between">

@@ -52,7 +52,7 @@ export default function TransactionDetails() {
         </View>
         <View>
           <Text className={styles.label}>Amount</Text>
-          <Text className={styles.description}>${data?.amount}</Text>
+          <Text className={styles.description}>${data?.amount.toFixed(2)}</Text>
         </View>
         <View>
           <Text className={styles.label}>Type</Text>

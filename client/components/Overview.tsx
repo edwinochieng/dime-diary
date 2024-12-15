@@ -26,7 +26,9 @@ export default function Overview({ transactions }: Props) {
       <View className={styles.card}>
         <View className="py-4">
           <Text className={styles.subheading}>Total Balance</Text>
-          <Text className={styles.amount}>${totals.totalAmount}</Text>
+          <Text className={styles.amount}>
+            ${totals.totalAmount.toFixed(2)}
+          </Text>
         </View>
       </View>
 
@@ -37,7 +39,9 @@ export default function Overview({ transactions }: Props) {
           </View>
           <View>
             <Text className={styles.subheading}>Total income</Text>
-            <Text className={styles.amount}>+${totals.totalIncome}</Text>
+            <Text className={styles.amount}>
+              +${totals.totalIncome.toFixed(2)}
+            </Text>
           </View>
         </View>
         <View className={`${styles.card} ml-1.5 flex-1`}>
@@ -46,7 +50,9 @@ export default function Overview({ transactions }: Props) {
           </View>
           <View>
             <Text className={styles.subheading}>Total expense</Text>
-            <Text className={styles.amount}>-${totals.totalExpenses}</Text>
+            <Text className={styles.amount}>
+              -${totals.totalExpenses.toFixed(2)}
+            </Text>
           </View>
         </View>
       </View>
