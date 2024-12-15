@@ -9,19 +9,20 @@ class TransactionBase(BaseModel):
     category: str
     date: datetime
     note: Optional[str] = None
-    user_id: str 
 
 class TransactionCreate(TransactionBase):
     pass
 
 class TransactionInDB(TransactionBase):
     id: str
+    user_id: str  
 
     class Config:
         json_encoders = {
             str: str,
-            datetime: lambda v: v.isoformat()  
+            datetime: lambda v: v.isoformat()
         }
+
 
 class TransactionUpdate(BaseModel):
     title: Optional[str] = None
