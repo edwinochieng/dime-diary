@@ -3,7 +3,10 @@ import React from "react";
 import { styles } from "@/constants/style";
 import { Link } from "expo-router";
 import { Transaction } from "@/types/transaction";
-import { getLastTenTransactions } from "@/utils/transactionUtils";
+import {
+  formatTransactionDate,
+  getLastTenTransactions,
+} from "@/utils/transactionUtils";
 
 interface Props {
   transactions: Transaction[];
@@ -34,7 +37,9 @@ export default function RecentTransactions({ transactions }: Props) {
         </View>
         <View className="mt-3 w-full flex-row justify-between">
           <Text className={styles.subText}>{item.transaction_type}</Text>
-          <Text className={styles.subText}>{item.date}</Text>
+          <Text className={styles.subText}>
+            {formatTransactionDate(item.date)}
+          </Text>
         </View>
       </View>
     </Link>
