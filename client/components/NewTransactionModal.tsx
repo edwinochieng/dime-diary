@@ -16,7 +16,7 @@ export default function NewTransactionModal({ visible, onClose }: Props) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(new Date());
   const [note, setNote] = useState("");
 
   const queryClient = useQueryClient();
@@ -28,7 +28,7 @@ export default function NewTransactionModal({ visible, onClose }: Props) {
         title,
         amount: parseFloat(amount),
         category,
-        date,
+        date: date.toISOString(),
         note,
       }),
     onSuccess: () => {

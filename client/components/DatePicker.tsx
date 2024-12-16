@@ -4,8 +4,8 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { styles } from "@/constants/style";
 
 interface DatePickerProps {
-  date: string;
-  setDate: (date: string) => void;
+  date: Date;
+  setDate: (date: Date) => void;
   placeholder?: string;
 }
 
@@ -20,7 +20,7 @@ export default function DatePicker({
     (event: any, selectedDate?: Date) => {
       setShow(false);
       if (selectedDate) {
-        setDate(selectedDate.toLocaleDateString());
+        setDate(selectedDate);
       }
     },
     [setDate]
@@ -35,7 +35,9 @@ export default function DatePicker({
         className={styles.inputContainer}
       >
         {date ? (
-          <Text className=" text-[#828282] dark:text-white">{date}</Text>
+          <Text className=" text-[#828282] dark:text-white">
+            {date.toLocaleDateString()}
+          </Text>
         ) : (
           <Text className="text-[#828282]">{placeholder}</Text>
         )}
@@ -46,7 +48,7 @@ export default function DatePicker({
           <View className="flex-1 justify-center bg-black bg-opacity-50">
             <View className="bg-white rounded-lg p-4">
               <DateTimePicker
-                value={date ? new Date(date) : new Date()}
+                value={date || new Date()}
                 mode="date"
                 display={Platform.OS === "ios" ? "inline" : "default"}
                 onChange={handleConfirm}
@@ -66,7 +68,7 @@ export default function DatePicker({
 
       {Platform.OS === "android" && show && (
         <DateTimePicker
-          value={date ? new Date(date) : new Date()}
+          value={date || new Date()}
           mode="date"
           display="default"
           onChange={handleConfirm}
