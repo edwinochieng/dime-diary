@@ -1,59 +1,87 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
+import { useTransactions } from "@/hooks/useTransactions";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export default function Insights() {
-  const pieData = [
-    { value: 40, color: "#93FCF8", gradientCenterColor: "#3BE9DE" },
+  const { data: transactions, isLoading } = useTransactions();
 
-    { value: 60, color: "#FFA5BA", gradientCenterColor: "#FF7F97" },
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
+  const incomeTotal =
+    transactions
+      ?.filter((tx) => tx.type === "Income")
+      .reduce((sum, tx) => sum + tx.amount, 0) ?? 0;
+
+  const expenseTotal =
+    transactions
+      ?.filter((tx) => tx.type === "Expense")
+      .reduce((sum, tx) => sum + tx.amount, 0) ?? 0;
+
+  const total = incomeTotal + expenseTotal;
+
+  const incomePercentage = total ? (incomeTotal / total) * 100 : 0;
+  const expensePercentage = total ? (expenseTotal / total) * 100 : 0;
+
+  const maxCategory =
+    incomePercentage >= expensePercentage ? "Income" : "Expense";
+
+  const pieData = [
+    {
+      value: incomePercentage,
+      color: "#93FCF8",
+      gradientCenterColor: "#3BE9DE",
+    },
+    {
+      value: expensePercentage,
+      color: "#FFA5BA",
+      gradientCenterColor: "#FF7F97",
+    },
   ];
 
-  const renderDot = (color: any) => {
-    return (
+  const renderDot = (color: string) => (
+    <View
+      style={{
+        height: 10,
+        width: 10,
+        borderRadius: 5,
+        backgroundColor: color,
+        marginRight: 10,
+      }}
+    />
+  );
+
+  const renderLegendComponent = () => (
+    <View style={{ flexDirection: "row", justifyContent: "center" }}>
       <View
         style={{
-          height: 10,
-          width: 10,
-          borderRadius: 5,
-          backgroundColor: color,
-          marginRight: 10,
+          flexDirection: "row",
+          alignItems: "center",
+          width: 120,
+          marginRight: 20,
         }}
-      />
-    );
-  };
-
-  const renderLegendComponent = () => {
-    return (
-      <>
-        <View style={{ flexDirection: "row", justifyContent: "center" }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              width: 120,
-              marginRight: 20,
-            }}
-          >
-            {renderDot("#3BE9DE")}
-            <Text style={{ color: "white" }}>Icome: 40%</Text>
-          </View>
-          <View
-            style={{ flexDirection: "row", alignItems: "center", width: 120 }}
-          >
-            {renderDot("#FF7F97")}
-            <Text style={{ color: "white" }}>Expense: 3%</Text>
-          </View>
-        </View>
-      </>
-    );
-  };
+      >
+        {renderDot("#3BE9DE")}
+        <Text style={{ color: "white" }}>
+          Income: {incomePercentage.toFixed(1)}%
+        </Text>
+      </View>
+      <View style={{ flexDirection: "row", alignItems: "center", width: 120 }}>
+        {renderDot("#FF7F97")}
+        <Text style={{ color: "white" }}>
+          Expense: {expensePercentage.toFixed(1)}%
+        </Text>
+      </View>
+    </View>
+  );
 
   return (
     <View
       style={{
         paddingVertical: 100,
-
         flex: 1,
       }}
     >
@@ -74,22 +102,20 @@ export default function Insights() {
             radius={90}
             innerRadius={60}
             innerCircleColor={"#232B5D"}
-            centerLabelComponent={() => {
-              return (
-                <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
+            centerLabelComponent={() => (
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <Text
+                  style={{ fontSize: 22, color: "white", fontWeight: "bold" }}
                 >
-                  <Text
-                    style={{ fontSize: 22, color: "white", fontWeight: "bold" }}
-                  >
-                    47%
-                  </Text>
-                  <Text style={{ fontSize: 14, color: "white" }}>
-                    Excellent
-                  </Text>
-                </View>
-              );
-            }}
+                  {incomePercentage >= expensePercentage
+                    ? `${incomePercentage.toFixed(0)}%`
+                    : `${expensePercentage.toFixed(0)}%`}
+                </Text>
+                <Text style={{ fontSize: 14, color: "white" }}>
+                  {maxCategory}
+                </Text>
+              </View>
+            )}
           />
         </View>
         {renderLegendComponent()}
