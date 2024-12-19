@@ -1,87 +1,44 @@
 import React, {
   createContext,
-  useContext,
-  useState,
   ReactNode,
+  useContext,
   useEffect,
+  useState,
 } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { login } from "@/services/auth";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "@/firebaseConfig";
 
-type User = {
-  email: string;
-  accessToken: string;
-};
-
-type SessionContextType = {
+interface AuthContextType {
   user: User | null;
-  signin: (email: string, password: string) => Promise<void>;
-  signout: () => Promise<void>;
-  isLoading: boolean;
-};
+  isLoggedIn: boolean;
+}
 
-const SessionContext = createContext<SessionContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 
-type SessionProviderProps = {
-  children: ReactNode;
-};
-
-export const SessionProvider: React.FC<SessionProviderProps> = ({
-  children,
-}) => {
+export function SessionProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const signin = async (email: string, password: string) => {
-    try {
-      const { access_token } = await login(email, password);
-
-      const loggedInUser = {
-        email,
-        accessToken: access_token,
-      };
-
-      setUser(loggedInUser);
-      await AsyncStorage.setItem("user", JSON.stringify(loggedInUser));
-    } catch (error) {
-      console.error("Error signing in:", error);
-      throw new Error("Invalid email or password.");
-    }
-  };
-
-  const signout = async () => {
-    setUser(null);
-    await AsyncStorage.removeItem("user");
-  };
 
   useEffect(() => {
-    const loadUserFromStorage = async () => {
-      try {
-        const storedUser = await AsyncStorage.getItem("user");
-        if (storedUser) {
-          setUser(JSON.parse(storedUser));
-        }
-      } catch (error) {
-        console.error("Failed to load user from storage:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+    });
 
-    loadUserFromStorage();
+    return () => unsubscribe();
   }, []);
 
   return (
-    <SessionContext.Provider value={{ user, signin, signout, isLoading }}>
+    <AuthContext.Provider value={{ user, isLoggedIn: !!user }}>
       {children}
-    </SessionContext.Provider>
+    </AuthContext.Provider>
   );
-};
+}
 
-export const useSession = (): SessionContextType => {
-  const context = useContext(SessionContext);
+export function useAuth() {
+  const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useSession must be used within a SessionProvider");
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
-};
+}

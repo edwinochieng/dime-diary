@@ -4,19 +4,17 @@ import { DrawerContentScrollView } from "@react-navigation/drawer";
 import { useNavigation, useRouter } from "expo-router";
 import { DrawerActions } from "@react-navigation/native";
 import Feather from "@expo/vector-icons/Feather";
-import { useSession } from "@/context/AuthContext";
+import { logoutUser } from "@/services/auth";
 
 export default function DrawerContent(props: any) {
   const navigation = useNavigation();
   const colorScheme = useColorScheme();
   const iconColor = colorScheme === "light" ? "#333333" : "#F2F2F2";
   const router = useRouter();
-  const { signout } = useSession();
 
   const handleLogout = () => {
     navigation.dispatch(DrawerActions.closeDrawer());
-    signout();
-    router.push("/login");
+    logoutUser();
   };
 
   return (

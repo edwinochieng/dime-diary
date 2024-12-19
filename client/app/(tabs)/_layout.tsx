@@ -5,13 +5,13 @@ import { Redirect, Tabs } from "expo-router";
 import { useColorScheme } from "react-native";
 import { Colors } from "@/constants/Colors";
 import ClearChat from "@/components/ClearChat";
-import { useSession } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const { user } = useSession();
+  const { isLoggedIn } = useAuth();
 
-  if (!user) {
+  if (!isLoggedIn) {
     return <Redirect href="/login" />;
   }
 

@@ -1,5 +1,4 @@
-import { useSession } from "@/context/AuthContext";
-import { registerUser } from "@/services/auth";
+import { signupUser } from "@/services/auth";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
@@ -9,17 +8,16 @@ export default function SignUpScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { signin } = useSession();
-
   const router = useRouter();
 
   const handleSignUp = async () => {
     if (!name.trim() || !email.trim() || !password.trim()) {
       return;
     }
-    await registerUser(name, email, password);
-    await signin(email, password);
-    router.replace("/");
+    const res = await signupUser(name, email, password);
+    if (res.success) {
+      router.replace("/");
+    }
   };
 
   return (
