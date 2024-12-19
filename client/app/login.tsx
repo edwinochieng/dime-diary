@@ -27,7 +27,7 @@ export default function LoginScreen() {
 
       <TextInput
         placeholder="Email"
-        className="border border-gray-300 p-3 rounded-lg mb-4 dark:text-gray-300 dark:placeholder:text-gray-400"
+        className="border border-gray-300 py-4 px-3 rounded-lg mb-4 dark:text-gray-300 dark:placeholder:text-gray-400"
         onChangeText={(text) => setEmail(text)}
         value={email}
         keyboardType="email-address"
@@ -35,7 +35,7 @@ export default function LoginScreen() {
       />
       <TextInput
         placeholder="Password"
-        className="border border-gray-300 p-3 rounded-lg mb-4 dark:text-gray-300 dark:placeholder:text-gray-400"
+        className="border border-gray-300 py-4 px-3 rounded-lg mb-4 dark:text-gray-300 dark:placeholder:text-gray-400"
         onChangeText={(text) => setPassword(text)}
         value={password}
         secureTextEntry

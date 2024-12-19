@@ -10,9 +10,9 @@ export default function EditTransactionButton({
 }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   return (
-    <View>
+    <View className="flex-1">
       <Pressable
-        className="z-50 absolute right-2 bottom-10 rounded-full bg-[#006AF6] justify-center items-center dark:bg-[#4B99FF] "
+        className="z-50 absolute right-2 bottom-20 rounded-full bg-[#006AF6] justify-center items-center dark:bg-[#4B99FF] "
         onPress={() => setIsModalVisible(true)}
       >
         <View className="flex-row items-center px-6 py-3">
