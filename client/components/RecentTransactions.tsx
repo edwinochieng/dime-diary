@@ -14,7 +14,6 @@ interface Props {
 
 export default function RecentTransactions({ transactions }: Props) {
   const recentTransactions = getLastTenTransactions(transactions);
-  console.log("RecentTransactions:", recentTransactions);
 
   const renderItem = ({ item }: { item: Transaction }) => (
     <Link

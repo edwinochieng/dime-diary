@@ -3,16 +3,11 @@ import LoadingScreen from "@/components/LoadingScreen";
 import Overview from "@/components/Overview";
 import RecentTransactions from "@/components/RecentTransactions";
 import { styles } from "@/constants/style";
-import { getAllTransactions } from "@/services/transaction";
-import { Transaction } from "@/types/transaction";
-import { useQuery } from "@tanstack/react-query";
+import { useTransactions } from "@/hooks/useTransactions";
 import { SafeAreaView, Text, View } from "react-native";
 
 export default function Home() {
-  const { data, isLoading } = useQuery<Transaction[]>({
-    queryKey: ["transactions"],
-    queryFn: getAllTransactions,
-  });
+  const { data, isLoading } = useTransactions();
 
   if (isLoading) {
     return <LoadingScreen />;

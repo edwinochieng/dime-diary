@@ -40,7 +40,7 @@ export default function Overview({ transactions }: Props) {
           <View>
             <Text className={styles.subheading}>Total income</Text>
             <Text className={styles.amount}>
-              +${totals.totalIncome.toFixed(2)}
+              + ${totals.totalIncome.toFixed(2)}
             </Text>
           </View>
         </View>
@@ -51,7 +51,7 @@ export default function Overview({ transactions }: Props) {
           <View>
             <Text className={styles.subheading}>Total expense</Text>
             <Text className={styles.amount}>
-              -${totals.totalExpenses.toFixed(2)}
+              - ${totals.totalExpenses.toFixed(2)}
             </Text>
           </View>
         </View>
