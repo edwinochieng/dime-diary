@@ -7,11 +7,11 @@ export const calculateTotals = (transactions: Transaction[]) => {
   );
 
   const totalIncome = transactions
-    .filter((transaction) => transaction.transaction_type === "Income")
+    .filter((transaction) => transaction.type === "Income")
     .reduce((sum, transaction) => sum + transaction.amount, 0);
 
   const totalExpenses = transactions
-    .filter((transaction) => transaction.transaction_type === "Expense")
+    .filter((transaction) => transaction.type === "Expense")
     .reduce((sum, transaction) => sum + transaction.amount, 0);
 
   return { totalAmount, totalIncome, totalExpenses };

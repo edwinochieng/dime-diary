@@ -14,6 +14,7 @@ interface Props {
 
 export default function RecentTransactions({ transactions }: Props) {
   const recentTransactions = getLastTenTransactions(transactions);
+  console.log("RecentTransactions:", recentTransactions);
 
   const renderItem = ({ item }: { item: Transaction }) => (
     <Link
@@ -25,18 +26,16 @@ export default function RecentTransactions({ transactions }: Props) {
           <Text className={styles.boldText}>{item.title}</Text>
           <Text
             className={`${
-              item.transaction_type === "Income"
-                ? "text-[#6FCF97]"
-                : "text-[#EB5757]"
+              item.type === "Income" ? "text-[#6FCF97]" : "text-[#EB5757]"
             } text-[18px] font-semibold`}
           >
-            {item.transaction_type === "Income"
+            {item.type === "Income"
               ? `+$${item.amount.toFixed(2)}`
               : `-$${item.amount.toFixed(2)}`}
           </Text>
         </View>
         <View className="mt-3 w-full flex-row justify-between">
-          <Text className={styles.subText}>{item.transaction_type}</Text>
+          <Text className={styles.subText}>{item.type}</Text>
           <Text className={styles.subText}>
             {formatTransactionDate(item.date)}
           </Text>
@@ -46,7 +45,7 @@ export default function RecentTransactions({ transactions }: Props) {
   );
 
   return (
-    <View className="flex-1 ">
+    <View className="flex-1">
       <Text className={`${styles.boldText} tracking-wide my-8`}>
         Recent Transactions
       </Text>

@@ -24,7 +24,7 @@ export default function NewTransactionModal({ visible, onClose }: Props) {
   const { mutate } = useMutation({
     mutationFn: () =>
       createTransaction({
-        transaction_type: activeTab,
+        type: activeTab,
         title,
         amount: parseFloat(amount),
         category,

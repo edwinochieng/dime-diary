@@ -21,7 +21,7 @@ export default function EditTransactionModal({
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(new Date());
   const [note, setNote] = useState("");
 
   const queryClient = useQueryClient();
@@ -29,11 +29,11 @@ export default function EditTransactionModal({
   const { mutate } = useMutation({
     mutationFn: () =>
       updateTransaction(transactionId, {
-        transaction_type: activeTab,
+        type: activeTab,
         title,
         amount: parseFloat(amount),
         category,
-        date,
+        date: date.toISOString(),
         note,
       }),
     onSuccess: () => {

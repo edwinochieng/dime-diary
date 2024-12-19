@@ -1,29 +1,64 @@
+import { db } from "@/firebaseConfig";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { NewTransaction, Transaction } from "@/types/transaction";
-import API from "@/utils/api";
+import { auth } from "@/firebaseConfig";
 
 export const getAllTransactions = async (): Promise<Transaction[]> => {
-  const res = await API.get("/transactions");
-  return res.data;
+  const user = auth.currentUser;
+
+  if (!user) throw new Error("User not authenticated");
+
+  const transactionsRef = collection(db, "transactions");
+  const q = query(transactionsRef, where("userId", "==", user.uid));
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map(
+    (doc) => ({ id: doc.id, ...doc.data() } as Transaction)
+  );
 };
 
 export const getTransactionDetails = async (
   id: string
 ): Promise<Transaction> => {
-  const res = await API.get(`/transactions/${id}`);
-  return res.data;
+  const transactionRef = doc(db, "transactions", id);
+  const snapshot = await getDoc(transactionRef);
+
+  if (!snapshot.exists()) {
+    throw new Error("Transaction not found");
+  }
+
+  return { id: snapshot.id, ...snapshot.data() } as Transaction;
 };
 
 export const deleteTransaction = async (id: string) => {
-  return await API.delete(`/transactions/${id}`);
+  const transactionRef = doc(db, "transactions", id);
+  await deleteDoc(transactionRef);
 };
 
-export const updateTransaction = async (
-  id: string,
-  transactionData: NewTransaction
-) => {
-  return await API.put(`/transactions/${id}`, transactionData);
+export const updateTransaction = async (id: string, transactionData: any) => {
+  const transactionRef = doc(db, "transactions", id);
+  await updateDoc(transactionRef, transactionData);
 };
 
 export const createTransaction = async (transactionData: NewTransaction) => {
-  return await API.post(`/transactions`, transactionData);
+  const user = auth.currentUser;
+
+  if (!user) throw new Error("User not authenticated");
+
+  const transactionsRef = collection(db, "transactions");
+  await addDoc(transactionsRef, {
+    ...transactionData,
+    userId: user.uid,
+    createdAt: new Date().toISOString(),
+  });
 };

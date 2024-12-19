@@ -22,7 +22,7 @@ export default function Home() {
     <SafeAreaView className={styles.screen}>
       <View className="flex-1">
         {data && data.length > 0 ? (
-          <View>
+          <View className="flex-1">
             <Overview transactions={data} />
             <RecentTransactions transactions={data} />
           </View>

@@ -56,7 +56,7 @@ export default function TransactionDetails() {
         </View>
         <View>
           <Text className={styles.label}>Type</Text>
-          <Text className={styles.description}>{data?.transaction_type}</Text>
+          <Text className={styles.description}>{data?.type}</Text>
         </View>
         <View>
           <Text className={styles.label}>Tag</Text>
