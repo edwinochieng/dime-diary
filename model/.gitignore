@@ -1,0 +1,6 @@
+/venv
+.env
+__pycache__/
+/core/__pycache__/
+/endpoints/__pycache__/
+/text_generation/__pycache__/
