@@ -1,34 +1,32 @@
 import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { styles } from "@/constants/style";
 import { Transaction } from "@/types/transaction";
-import { calculateTotals } from "@/utils/transactionUtils";
 
 interface Props {
   transactions: Transaction[];
 }
 
 export default function Overview({ transactions }: Props) {
-  const [totals, setTotals] = useState({
-    totalAmount: 0,
-    totalIncome: 0,
-    totalExpenses: 0,
-  });
+  const incomeTotal =
+    transactions
+      ?.filter((tx) => tx.type === "Income")
+      .reduce((sum, tx) => sum + tx.amount, 0) ?? 0;
 
-  useEffect(() => {
-    const calculatedTotals = calculateTotals(transactions);
-    setTotals(calculatedTotals);
-  }, []);
+  const expenseTotal =
+    transactions
+      ?.filter((tx) => tx.type === "Expense")
+      .reduce((sum, tx) => sum + tx.amount, 0) ?? 0;
+
+  const totalAmount = incomeTotal - expenseTotal;
   return (
     <View>
       {/**Total balance */}
       <View className={styles.card}>
         <View className="py-4">
           <Text className={styles.subheading}>Total Balance</Text>
-          <Text className={styles.amount}>
-            ${totals.totalAmount.toFixed(2)}
-          </Text>
+          <Text className={styles.amount}>${totalAmount.toFixed(2)}</Text>
         </View>
       </View>
 
@@ -39,9 +37,7 @@ export default function Overview({ transactions }: Props) {
           </View>
           <View>
             <Text className={styles.subheading}>Total income</Text>
-            <Text className={styles.amount}>
-              + ${totals.totalIncome.toFixed(2)}
-            </Text>
+            <Text className={styles.amount}>+ ${incomeTotal.toFixed(2)}</Text>
           </View>
         </View>
         <View className={`${styles.card} ml-1.5 flex-1`}>
@@ -50,9 +46,7 @@ export default function Overview({ transactions }: Props) {
           </View>
           <View>
             <Text className={styles.subheading}>Total expense</Text>
-            <Text className={styles.amount}>
-              - ${totals.totalExpenses.toFixed(2)}
-            </Text>
+            <Text className={styles.amount}>- ${expenseTotal.toFixed(2)}</Text>
           </View>
         </View>
       </View>
