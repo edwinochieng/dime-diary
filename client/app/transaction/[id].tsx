@@ -75,7 +75,12 @@ export default function TransactionDetails() {
           </View>
         )}
       </ScrollView>
-      <EditTransactionButton transactionId={transactionId} />
+      {data && (
+        <EditTransactionButton
+          transactionId={transactionId}
+          transaction={data}
+        />
+      )}
     </SafeAreaView>
   );
 }

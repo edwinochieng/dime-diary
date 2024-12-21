@@ -5,30 +5,33 @@ import CategoryPicker from "./CategoryPicker";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateTransaction } from "@/services/transaction";
 import DatePicker from "./DatePicker";
+import { Transaction } from "@/types/transaction";
 
 interface Props {
   transactionId: string;
+  transaction: Transaction;
   visible: boolean;
   onClose: () => void;
 }
 
 export default function EditTransactionModal({
   transactionId,
+  transaction,
   visible,
   onClose,
 }: Props) {
-  const [activeTab, setActiveTab] = useState("Income");
-  const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [note, setNote] = useState("");
+  const [activeTab, setActiveTab] = useState(transaction.type);
+  const [title, setTitle] = useState(transaction.title);
+  const [amount, setAmount] = useState(transaction.amount.toString());
+  const [category, setCategory] = useState(transaction.category);
+  const [date, setDate] = useState(new Date(transaction.date));
+  const [note, setNote] = useState(transaction.note!);
 
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
-    mutationFn: () =>
-      updateTransaction(transactionId, {
+    mutationFn: async () =>
+      await updateTransaction(transactionId, {
         type: activeTab,
         title,
         amount: parseFloat(amount),
@@ -38,6 +41,9 @@ export default function EditTransactionModal({
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({
+        queryKey: ["transactionDetails", transactionId],
+      });
       onClose();
     },
     onError: (error) => {
