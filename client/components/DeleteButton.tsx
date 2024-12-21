@@ -1,4 +1,11 @@
-import { Modal, Pressable, Text, useColorScheme, View } from "react-native";
+import {
+  Modal,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  useColorScheme,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -19,7 +26,7 @@ export default function DeleteButton({
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const { mutate, isPending } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: () => deleteTransaction(transactionId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
@@ -31,9 +38,12 @@ export default function DeleteButton({
   };
   return (
     <View>
-      <Pressable onPress={() => setIsModalVisible(true)}>
-        <AntDesign name="delete" size={24} color={iconColor} />
-      </Pressable>
+      <View>
+        <TouchableOpacity onPress={() => setIsModalVisible(true)}>
+          <AntDesign name="delete" size={24} color={iconColor} />
+        </TouchableOpacity>
+      </View>
+
       <Modal
         transparent={true}
         visible={isModalVisible}
@@ -45,13 +55,17 @@ export default function DeleteButton({
             <Text className={styles.boldText}>
               Are you sure you want to delete this transaction?
             </Text>
-            <View className="flex-1 flex-row space-x-3">
-              <View>
-                <Pressable className="text-white">Cancel</Pressable>
+            <View className="mt-4 ">
+              <View className="">
+                <Pressable onPress={() => setIsModalVisible(false)}>
+                  <Text className="text-white text-center text-lg">Cancel</Text>
+                </Pressable>
               </View>
-              <View>
-                <Pressable className="text-red-500" onPress={handleDelete}>
-                  Delete
+              <View className="mt-2 ">
+                <Pressable onPress={handleDelete}>
+                  <Text className="text-red-500 text-center text-lg">
+                    Delete
+                  </Text>
                 </Pressable>
               </View>
             </View>
