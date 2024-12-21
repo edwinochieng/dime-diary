@@ -1,7 +1,18 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet, useColorScheme } from "react-native";
 import React from "react";
+import Markdown from "react-native-markdown-display";
 
 export default function Message({ message }: any) {
+  const colorScheme = useColorScheme();
+  const bodyColor = colorScheme === "light" ? "#000000" : "#F2F2F2";
+
+  const styles = StyleSheet.create({
+    body: {
+      fontSize: 17,
+      color: bodyColor,
+    },
+  });
+
   return (
     <View className="mb-4">
       <View
@@ -16,15 +27,16 @@ export default function Message({ message }: any) {
               : "bg-white dark:bg-[#1A191E]"
           }`}
         >
-          <Text
-            className={`font-normal text-[17px]  ${
-              message.sender === "You"
-                ? "text-[#F2F2F2]"
-                : "text-[#000000] dark:text-[#F2F2F2]"
-            }`}
-          >
-            {message.content}
-          </Text>
+          {message.sender === "You" ? (
+            <Text
+              className="font-normal text-[17px]  
+                text-[#F2F2F2]"
+            >
+              {message.content}
+            </Text>
+          ) : (
+            <Markdown style={styles}>{message.content}</Markdown>
+          )}
         </View>
       </View>
     </View>

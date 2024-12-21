@@ -25,13 +25,13 @@ export default function Chats() {
 
     setGeneratingResponse(true);
     const botResponse = await generateResponse(userPrompt);
+    setGeneratingResponse(false);
 
     const botMessage = {
       sender: "Bot",
       content: botResponse,
     };
     addToChat(botMessage);
-    setGeneratingResponse(false);
   };
   return (
     <SafeAreaView className={styles.screen}>

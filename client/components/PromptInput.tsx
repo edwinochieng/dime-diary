@@ -24,13 +24,15 @@ export default function PromptInput({ onSendMessage }: any) {
           onChangeText={setUserPrompt}
           editable={!generatingResponse}
         />
-        <Pressable
-          onPress={handleSend}
-          disabled={generatingResponse || !userPrompt.trim()}
-          className="bg-[#006AF6]  rounded-full h-12 w-12 items-center justify-center"
-        >
-          <FontAwesome name="send" size={20} color="#F2F2F2" />
-        </Pressable>
+        {!generatingResponse && (
+          <Pressable
+            onPress={handleSend}
+            disabled={!userPrompt.trim()}
+            className="bg-[#006AF6]  rounded-full h-12 w-12 items-center justify-center"
+          >
+            <FontAwesome name="send" size={20} color="#F2F2F2" />
+          </Pressable>
+        )}
       </View>
     </View>
   );
