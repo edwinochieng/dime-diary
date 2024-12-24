@@ -2,8 +2,20 @@ import { View, Text, Pressable, Modal, FlatList } from "react-native";
 import React, { useState } from "react";
 import { styles } from "@/constants/style";
 
-const incomeCategories = ["Salary", "Freelance", "Investment"];
-const expenseCategories = ["Food", "Transport", "Utilities"];
+const incomeCategories = [
+  "Salary",
+  "Freelance",
+  "Investment",
+  "Business",
+  "Refunds",
+];
+const expenseCategories = [
+  "Food",
+  "Transport",
+  "Utilities",
+  "Miscellaneous",
+  "Entertainment",
+];
 
 export default function CategoryPicker({
   activeTab,
