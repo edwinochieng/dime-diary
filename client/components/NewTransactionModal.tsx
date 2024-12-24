@@ -45,6 +45,10 @@ export default function NewTransactionModal({ visible, onClose }: Props) {
       return;
     }
     mutate();
+    setTitle("");
+    setAmount("");
+    setNote("");
+    setCategory("");
   };
 
   return (
