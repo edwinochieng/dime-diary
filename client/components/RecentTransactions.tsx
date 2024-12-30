@@ -34,7 +34,7 @@ export default function RecentTransactions({ transactions }: Props) {
           </Text>
         </View>
         <View className="mt-3 w-full flex-row justify-between">
-          <Text className={styles.subText}>{item.type}</Text>
+          <Text className={styles.subText}>{item.category}</Text>
           <Text className={styles.subText}>
             {formatTransactionDate(item.date)}
           </Text>
