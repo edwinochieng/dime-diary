@@ -34,6 +34,11 @@ export default function NewTransactionModal({ visible, onClose }: Props) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       onClose();
+      setTitle("");
+      setAmount("");
+      setNote("");
+      setCategory("");
+      setDate(new Date());
     },
     onError: (error) => {
       console.error("Error creating transaction:", error);
@@ -45,10 +50,6 @@ export default function NewTransactionModal({ visible, onClose }: Props) {
       return;
     }
     mutate();
-    setTitle("");
-    setAmount("");
-    setNote("");
-    setCategory("");
   };
 
   return (
