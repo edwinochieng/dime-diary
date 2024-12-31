@@ -21,10 +21,10 @@ export default function Message({ message }: any) {
         }`}
       >
         <View
-          className={`max-w-[75%] px-3.5 py-2 rounded-xl shadow-xl ${
+          className={` px-3.5 py-2 rounded-2xl shadow-xl ${
             message.sender === "You"
-              ? "bg-[#006AF6] dark:bg-[#4B99FF] "
-              : "bg-white dark:bg-[#1A191E]"
+              ? "bg-[#006AF6] dark:bg-[#4B99FF] max-w-[75%]"
+              : "bg-white dark:bg-[#1A191E] max-w-full"
           }`}
         >
           {message.sender === "You" ? (
