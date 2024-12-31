@@ -22,17 +22,17 @@ Dime Diary is an intuitive and feature-rich expense tracker application designed
 ## Screenshots
 
 <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-  <img src="client/assets/screenshots/screenshot1.jpg" alt="Screenshot 1" width="45%" />
-  <img src="client/assets/screenshots/screenshot2.jpg" alt="Screenshot 2" width="45%" />
+  <img src="client/assets/screenshots/Screenshot1.jpg" alt="Screenshot 1" width="45%" />
+  <img src="client/assets/screenshots/Screenshot2.jpg" alt="Screenshot 2" width="45%" />
   
-  <img src="client/assets/screenshots/screenshot3.jpg" alt="Screenshot 3" width="45%" />
-  <img src="client/assets/screenshots/screenshot4.jpg" alt="Screenshot 4" width="45%" />
+  <img src="client/assets/screenshots/Screenshot3.jpg" alt="Screenshot 3" width="45%" />
+  <img src="client/assets/screenshots/Screenshot4.jpg" alt="Screenshot 4" width="45%" />
   
-  <img src="client/assets/screenshots/screenshot5.jpg" alt="Screenshot 5" width="45%" />
-  <img src="client/assets/screenshots/screenshot6.jpg" alt="Screenshot 6" width="45%" />
+  <img src="client/assets/screenshots/Screenshot5.jpg" alt="Screenshot 5" width="45%" />
+  <img src="client/assets/screenshots/Screenshot6.jpg" alt="Screenshot 6" width="45%" />
   
-  <img src="client/assets/screenshots/screenshot7.jpg" alt="Screenshot 7" width="45%" />
-  <img src="client/assets/screenshots/screenshot8.jpg" alt="Screenshot 8" width="45%" />
+  <img src="client/assets/screenshots/Screenshot7.jpg" alt="Screenshot 7" width="45%" />
+  <img src="client/assets/screenshots/Screenshot8.jpg" alt="Screenshot 8" width="45%" />
 </div>
 
 ## License
